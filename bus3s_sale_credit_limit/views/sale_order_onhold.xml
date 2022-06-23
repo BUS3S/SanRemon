@@ -10,7 +10,7 @@
         <field name="domain">[('state', 'in', ['to_approve'])]</field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
-                Sales order of customer that exceeds sales order amount than that of credit limit of customer are moved to "On Hold" stage.
+                Sales order of customer that exceeds sales order amount than that of credit limit of customer are moved to "To Approve " stage.
             </p>
         </field>
     </record>
