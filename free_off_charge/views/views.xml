@@ -1,0 +1,48 @@
+<odoo>
+    <data>
+
+        <record id="view_partner_form_foc" model="ir.ui.view">
+            <field name="name">>res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='vat']" position="before">
+                    <field name="foc_percentage"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_order_form_foc" model="ir.ui.view">
+            <field name="name">>sale.order.inherited.form.foc</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                    <field name="invoice_type"/>
+                    <field name="is_foc_applied" invisible="1"/>
+                    <field name="foc_type"
+                           attrs="{'required': [('invoice_type', 'in', ('foc'))], 'invisible': [('invoice_type', 'not in', ('foc'))]}"/>
+                    <!--                    <field name="foc_sales_order"-->
+                    <!--                           attrs="{'required': [('foc_type', 'in', ('foc_sales'))], 'invisible': [('foc_type', 'not in', ('foc_sales'))]}"-->
+                    <!--                           domain="[('partner_id', '=', partner_id),('is_foc_applied', '=', False)]" readonly="0"-->
+                    <!--                           options="{'no_quick_create': True, 'no_create_edit' : True}" />-->
+                    <field name="foc_sale_order_ids" widget="many2many_tags"
+                           attrs="{'required': [('foc_type', 'in', ('foc_sales'))], 'invisible': [('foc_type', 'not in', ('foc_sales'))]}"
+                           options="{'no_quick_create': True, 'no_create_edit' : True}"/>
+                    <field name="foc_orders_amount"
+                           attrs="{'required': [('foc_type', 'in', ('foc_sales'))], 'invisible': [('foc_type', 'not in', ('foc_sales'))]}"
+                    />
+                    <field name="foc_customer_percentage"
+                           attrs="{'required': [('foc_type', 'in', ('foc_sales'))], 'invisible': [('foc_type', 'not in', ('foc_sales'))]}"
+                    />
+                    <field name="foc_free_amount"
+                           attrs="{'required': [('foc_type', 'in', ('foc_sales'))], 'invisible': [('foc_type', 'not in', ('foc_sales'))]}"
+                    />
+
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>
