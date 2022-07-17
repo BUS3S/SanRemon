@@ -113,6 +113,31 @@ class SaleOrder(models.Model):
         vals = super().action_confirm()
         print(vals)
         for order in self:
+            if self.state == 'to_approve' and self.env.search(
+                    'bus3s_sale_credit_limit.sh_group_sale_order_partner_credit_limit'):
+                res = super(SaleOrder, self).action_confirm()
+            elif self and self.partner_id and self.partner_id.customer_credit:  # If Check
+                tot_receivable = self.partner_id.credit + self.amount_total
+                crdt_lmt = self.partner_id.customer_credit_limit
+                if tot_receivable > crdt_lmt:
+                    if self.partner_credit_conform:  # Must Confirm Order at any condition
+                        res = super(SaleOrder, self).action_confirm()
+                        return res
+                    else:
+                        return {
+                            'name': 'Customer Credit',
+                            'view_type': 'form',
+                            'view_mode': 'form',
+                            'res_model': 'sale.order.partner.credit',
+                            'view_id': self.env.ref('bus3s_sale_credit_limit.sale_order_partner_credit_limit_form').id,
+                            'type': 'ir.actions.act_window',
+                            'target': 'new',
+                            'context': self.env.context,
+                        }
+                else:
+                    res = super(SaleOrder, self).action_confirm()
+                    return res
+
             foc_sales_order = order.foc_sale_order_ids
             if foc_sales_order:
                 for row in foc_sales_order:
