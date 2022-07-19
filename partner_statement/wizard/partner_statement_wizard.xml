@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+        <record id="partner_statement_wizard_view" model="ir.ui.view">
+        <field name="name">partner.statement.wizard.view</field>
+        <field name="model">partner.statement.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group  string="Filter" col="2" colspan="4">
+                    <group>
+                        <field name="partner_id"/>
+                        <field name="partner_account_type"/>
+<!--                        <field name="currency"/>-->
+                    </group>
+                    <group>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                        <field name="date"/>
+                    </group>
+                </group>
+
+                <group>
+                    <field name="journal_ids" wedgit="many2many_tags"/>
+                </group>
+
+                <footer>
+                    <button type="object" string='Print Report' class="btn-primary" name="view_report" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+<record id="partner_statement_wizard_action" model="ir.actions.act_window">
+        <field name="name">Partner Statement</field>
+        <field name="res_model">partner.statement.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="partner_statement_wizard_view"/>
+    </record>
+    <menuitem name="Partner Statement" id="account_statement_zi_menu" parent="account.menu_finance_reports" action="partner_statement_wizard_action" sequence="12" />
+
+
+    </data>
+</openerp>

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <report
+            id="action_report_partner_account_statement"
+            model="report.partner.statement.wizard"
+            string="Partner Account Statement"
+            report_type="qweb-html"
+            name="partner_statement.partner_statement_report"
+            file="partner_statement.partner_statement_report"
+            menu="False"
+        />
+
+
+
+    <template id="partner_statement_report">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <center>
+                        <group>                        <h2 style="margin-left: -790px;text-decoration: underline;">AccountStatement</h2>
+                            <h2 style="1px solid black;margin-right: -790px; margin-top:-50px;text-decoration: underline;"> كشـف حسـاب
+</h2>
+</group>
+                          <br/><br/><br/>
+                        <h5 style="margin-right: -990px; margin-top:-20px"> التاريخ:  <t t-esc="date"/></h5>
+                          <br/>
+                        <h5 style="1px solid black;margin-right: -990px; margin-top:-20px"> <t t-esc="partner"/>  / السادة   </h5>
+                         <br/>
+                        <h5 style="1px solid black;margin-right: -1100px; margin-top:-20px"> /  رقم العميل<t t-esc="partners"/> </h5>
+
+                        <h5 style="1px solid black;margin-left: -790px; margin-top:-20px">من تاريخ <t t-esc="date_from"/>  </h5>
+                       <br/>
+                        <h5 style="1px solid black;margin-left: -790px; margin-top:-20px"> الى تاريخ <t t-esc="date_to"/>  </h5>
+                    </center>
+
+                <hr/>
+                <t t-set="decimal" t-value="'{0:,.'+str(currency['decimal'])+'f}'"/>
+                <table class="table-bordered" border="2" style=" border-style: groove;font-size:10px font-weight:bold font-family:monospace">
+                    <thead>
+                        <tr>
+                                                                     <h5><th scope="col" style="width: 230px;horizontal-align : middle;text-align:center;">الـــرصيــــــد</th></h5>
+<h5>                                                        <th  scope="col" style="width: 230px;horizontal-align : middle;text-align:center;">دائـــن</th>
+</h5>
+<h5>                                                        <th  scope="col" style="width: 230px;horizontal-align : middle;text-align:center;">مــديــن</th>
+</h5>
+<h5>                                                        <th  scope="col" style="horizontal-align : middle;text-align:center;width: 230px;">البيــــــــــــــــــــــــــان</th>
+</h5>
+                                                                                    <th  scope="col" style="horizontal-align : middle;text-align:center;width: 230px;">ملاحظات</th>
+
+<h5>                                                        <th  scope="col" style="horizontal-align : middle;text-align:center;width: 230px;">التاريخ</th>
+</h5>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <h5>
+                        <tr>
+                                                                                    <t t-if="local_currency">
+                                <t t-set="o_debit" t-value="0"/>
+                                <t t-set="o_credit" t-value="0"/>
+                                <t t-set="o_balance" t-value="0"/>
+
+
+                                                                                            <t t-if="oc_open">
+                                    <t t-set="o_credit" t-value="oc_open[0]['credit']"/>
+                                    <t t-set="o_balance" t-value="o_balance - oc_open[0]['credit']"/>
+                                </t>
+
+                                <th class="text-right"><t t-esc="decimal.format(o_balance)"/> </th>
+
+                                <th class="text-right"><t t-esc="decimal.format(o_debit)"/> </th>
+                                <th class="text-right"><t t-esc="decimal.format(o_credit)"/> </th>
+                            </t>
+
+
+                                <th></th>
+                                                            <th>الـــرصيــــــد السابق </th>
+
+
+  <th> </th>
+
+                                                                <t t-if="od_open">
+                                    <t t-set="o_debit" t-value="od_open[0]['debit']"/>
+                                    <t t-set="o_balance" t-value="o_balance + od_open[0]['debit']"/>
+                                </t>
+
+
+
+                        </tr>
+                        </h5>
+                        <h5>
+<!--                        <t t-if="local_currency">-->
+                            <t t-set="balance" t-value="o_balance"/>
+                            <t t-set="total_cr" t-value="0"/>
+                            <t t-set="total_dr" t-value="0"/>
+                            <t t-foreach="data" t-as="line">
+                                <t t-set="balance" t-value="balance + line['balance']"/>
+                                <t t-set="total_cr" t-value="total_cr + line['credit']"/>
+                                <t t-set="total_dr" t-value="total_dr + line['debit']"/>
+                                <tr>
+                                    <td class="text-right"><t t-esc="decimal.format((balance))"/> </td>
+                                                                        <td class="text-right"><t t-esc="decimal.format(line['credit'])"/> </td>
+
+                                    <td class="text-right"><t t-esc="decimal.format(line['debit'])"/> </td>
+
+                                    <td><t t-esc="line['descr']"/> </td>
+
+                                    <td><t t-esc="line['name']"/> </td>
+
+                                    <td><t t-esc="line['date']"/> </td>
+
+                                </tr>
+                            <style>
+                                .line {
+  width: 100%;
+  color: black;
+  height: 2px;
+  background-color: black;
+                            </style>
+
+                        </t>
+                        </h5>
+                    </tbody>
+
+
+
+
+                </table>
+
+
+                  </div>
+                                            <tr >
+                                                  <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+
+
+                                                    <hr style="height:2px;border-width:0;color:gray;background-color:gray"/>
+
+                  <table class="table-bordered" border="2" style=" border-style: groove;font-size:10px font-weight:bold font-family:monospace">
+
+                               <th style="width: 230px;" class="text-right"><t t-esc="decimal.format(balance)"/></th>
+                                <th style="width: 230px;" class="text-right"><t t-esc="decimal.format(total_cr)"/></th>
+
+                                <th style="width: 230px;" class="text-right"><t t-esc="decimal.format(total_dr)"/></th>
+                  </table>
+                                                                                                <div class='text-right '>
+
+                                                <th style="margin-right=550px">
+                                                  <h2 style="margin-right: 39px;">  الرصيد<t t-esc="decimal.format(balance)"/>
+                                               <br/>
+                                                    يعتبر هذا الكشف صحيحا ما لم يرد عليه خلاال خمسة عشر يوما من تاريخه
+                                                  </h2>
+                                                </th>
+                                                                                                </div>
+                            </tr>
+                <br/>
+                                                                                                                <div class='text-right '>
+
+                                        <h4 style="1px solid black;margin-right: 39px;"> الادارة المالية  </h4>
+                                          <br/>
+                                        <h4 style="1px solid black;margin-right: 39px; "> ............................  </h4>
+                                                                                                                </div>
+                                                                                                                <div class='text-left '>
+
+
+                                        <h4 style="1px solid black;margin-left: 39px; margin-top:-20px">توقيع المستلم  </h4>
+                                          <br/>
+                                        <h4 style="1px solid black;margin-left: 39px; margin-top:-20px">............................  </h4>
+
+                                                                                                                </div>
+
+            </t>
+        </t>
+        </template>
+
+
+
+    </data>
+</odoo>
