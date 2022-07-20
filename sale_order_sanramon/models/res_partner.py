@@ -7,7 +7,7 @@ class ResPartner(models.Model):
     _inherit = "res.partner"
 
     sale_tag = fields.Many2one(
-        comodel_name="sale.order.tag", string="TagType", company_dependent=True
+        comodel_name="sale.order.tag", string="SanRemon Type", company_dependent=True
     )
 
     def copy_data(self, default=None):
