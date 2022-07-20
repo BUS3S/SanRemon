@@ -11,7 +11,7 @@ class SaleOrder(models.Model):
 
     tag_id = fields.Many2one(
         comodel_name="sale.order.tag",
-        string="Tag type",
+        string="SanRemon Tag",
         compute="_compute_sale_tag_id",
         store=True,
         readonly=False,
