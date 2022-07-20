@@ -9,7 +9,7 @@ class AccountMove(models.Model):
 
     sale_tag_id = fields.Many2one(
         comodel_name="sale.order.tag",
-        string="SanRemon Type",
+        string="SanRemon Tag",
         compute="_compute_sale_tag_id",
         store=True,
         readonly=True,
