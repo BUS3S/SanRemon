@@ -344,7 +344,6 @@ class ReturnOrder(models.Model):
                         'price_unit': move_ids_without_package.product_id.lst_price,
                         'account_id': move_ids_without_package.product_id.property_account_income_id.id if move_ids_without_package.product_id.property_account_income_id
                         else move_ids_without_package.product_id.categ_id.property_account_income_categ_id.id,
-                        'tax_ids': [(6, 0, [picking_id.company_id.account_sale_tax_id.id])],
                         'quantity': move_ids_without_package.quantity_done,
                     })
                     invoice_line_list.append(vals)
