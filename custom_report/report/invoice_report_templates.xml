@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_eng_invoice" inherit_id="account.report_invoice_document">
+            <xpath expr="//t[@t-call='web.external_layout']" position="attributes">
+                <attribute name="t-call">custom_report.letter_layout</attribute>
+            </xpath>
+        </template>
+
+        <template id="invoice_custom_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+<!--                    <t t-set="lang" t-value="o.invoice_user_id.lang if o.type in ('in_invoice', 'in_refund') else o.partner_id.lang"/>-->
+<!--                    <t t-call="custom_report.report_eng_invoice" t-lang="lang"/>-->
+                 <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+<t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+            <div id="container" class="header">
+                <style>
+  body {
+  }
+  img {
+    width: 170px;
+    float: left;
+    margin-right: 15px;
+  } h1 {
+
+
+  } h6{
+
+  }h2{
+                    margin-top: -90px;
+    border-color: #000000;
+    float: left;
+    border-style: groove;
+    border-color: #000000;
+    background-color: black;
+    color: azure;
+                    width:300px;
+
+  }h3{ margin-right: -150px;
+ border-color: #000000;
+    float: right;
+    border-style: groove;
+    border-color: #000000;
+    background-color: black;
+    color: azure;
+                    width: auto;
+                    margin-top: -150px;
+
+  }
+                    h5 {
+                                        margin-top:-240px;
+
+    float: right;
+    margin-right: -390px;
+  }
+  div {
+    float: left;
+    width: calc(100% - 350px - 10px);
+  }
+</style>
+                                        <br/>
+
+
+                        <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % to_text(company.logo)" style="display: inline, max-height: 150px;" />
+
+
+
+                        <span t-field="company.partner_id" />
+
+                        <br/>
+                        <span t-field="company.partner_id.city" />
+                        <span t-field="company.partner_id.country_id" />
+                        <br/>
+                        <span t-field="company.partner_id.email" />
+                        <br/>
+                        <span t-field="company.partner_id.website" />
+                        <span t-field="company.partner_id.vat" />
+                        <br/>
+                     <br/>
+
+                                        <br/>
+                                        <br/>
+                                        <br/>
+
+                                                <h1 style="margin-top:-220px;
+    float: right;
+    margin-right: -480px;">Invoice</h1>
+
+
+
+                 <br/><br/>
+                                <br/>
+                                <br/>
+
+                <t t-if="o.invoice_date">
+                        <h6 style="  margin-top:-250px;
+
+    float: right;
+    margin-right: -430px;">Invoice  Date:
+
+                            <span t-esc="o.invoice_date"/> </h6>
+                                                            </t>
+                <br/>
+
+                <t t-if="o.name">
+                   <h5 style="  margin-top:-250px;
+
+    float: right;
+    margin-right: -580px;"> Invoice Number:
+
+
+                        <span t-esc="o.name"/> </h5>
+
+                </t>
+                <br/>
+                <t t-if="o.partner_id.ref">
+                        <h5 style=" margin-top:-240px;
+
+    float: right;
+    margin-right: -372px" >Customer ID </h5>
+                <span t-esc="o.partner_id.ref"/>
+                </t>
+                <br/>
+<!--                <t t-if="o.order_id.name">-->
+                  <h5 style=" margin-top:-230px;
+
+    float: right;
+    margin-right: -420px">Purchased Order:</h5>
+<!--                    <span t-esc="o.order_id.name"/>-->
+<!--                </t>-->
+
+     <div class="bill">
+                <h2>Bill To : </h2>
+                <span  t-field="o.partner_id"
+                        t-field-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": true, "phone_icons": true}'/>
+                                    <span t-field="o.partner_id.city"/>
+
+
+                        <span t-field="o.partner_id.state_id"/>
+                                        <br />
+
+                        <span t-field="o.partner_id.country_id"/>
+                                        <br />
+
+                        <span t-field="o.partner_id.email"/>
+                    <br />
+                        <span t-field="o.partner_id.website"/>
+                    </div>
+
+                <td>
+
+        </td>
+
+            </div>
+<t t-call="web.html_container"/>
+        <style>
+            .table {
+    width: 100%;
+            border:1px solid black;
+    margin-bottom: 1rem;
+    color: #000000;
+    margin-top: 2px;
+}
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+
+        </style>
+        <div class="page">
+            <br/>
+
+
+
+
+            <br/><br/>
+            <br/><br/>
+            <br/><br/>
+            <br/><br/>
+            <br/><br/>
+            <br/><br/>
+            <br/>
+           <div class="oe_structure"/>
+            <table class="table table-sm o_main_table">
+                <thead>
+                    <tr>
+                        <th style="background-color:#000000 !important;border: 1px !important; border-style: solid !important; border-color: #fff; color:#fff !important; "><strong>HS</strong></th>
+                        <th style="background-color:#000000 !important;border: 1px !important; border-style: solid !important; border-color: #fff; color:#fff !important; "><strong>Description</strong></th>
+                        <th class="text-center" style="background-color:#000000 !important;border: 1px !important; border-style: solid !important; border-color: #fff; color:#fff !important; "><strong>Picking</strong></th>
+                        <th class="text-right" style="background-color:#000000 !important;border: 1px !important; border-style: solid !important; border-color: #fff; color:#fff !important; "><strong>Qty</strong></th>
+
+                        <th class="text-right" style="background-color:#000000 !important;border: 1px !important; border-style: solid !important; border-color: #fff; color:#fff !important; "><strong>Rate</strong></th>
+                        <th class="text-right" style="background-color:#000000 !important;border: 1px !important; border-style: solid !important; border-color: #fff; color:#fff !important; "><strong>Amount</strong></th>
+                    </tr>
+                </thead>
+                                        <tbody class="invoice_tbody">
+                            <tr t-foreach="o.invoice_line_ids" t-as="l">
+                                 <td>
+                            <span t-field="l.product_id.default_code"/>
+                        </td>
+                                <td><span t-field="l.name"/></td>
+                                <td class="text-right">
+                            <span t-field="l.product_id.uom_id"/>
+                        </td>
+                                <td class="text-right">
+                                    <span t-field="l.quantity"/>
+                                    <span t-field="l.uom_id"  groups="product.group_uom"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="l.price_unit"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="l.price_subtotal"
+                                        t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                                </td>
+                            </tr>
+                        </tbody>
+
+            </table>
+        </div>
+         <div class="bill">
+                <h2 style="
+    border-color: #000000;
+    float: left;
+    border-style: groove;
+    border-color: #000000;
+    background-color: black;
+    color: azure;
+                    width:500px;
+" >Payment Terms :
+
+                </h2>
+             <br/>
+             <br/>
+
+            <h4 style="float: left;margin-left:-500px;"><span t-field="o.invoice_payment_term_id"/></h4>
+
+             <br/>
+             <br/>
+             <br/>
+
+         </div>
+
+                        <tr class="border-black">
+                            <h2 style="
+    float: right;
+                            " >Total : <span t-field="o.amount_residual"/>
+ </h2>
+                            <br />
+                            <br/>
+                         </tr>
+                        <tr>
+                        </tr>
+
+                 <div class="india Manufacturer">
+                <h2 style="
+    border-color: #000000;
+    float: left;
+    border-style: groove;
+    border-color: #000000;
+    background-color: black;
+    color: azure;
+                    width:500px;
+" >india Manufacturer: </h2>
+                     <h4 style=" float: left;     width:500px;">
+            Aasth Enterprise, india <br/>
+            Total Order Value includes packing ,handling and shipping<br/>
+            COMMERCIAL OF CHAMPER STAMPED CERTIFICATE OF ORIGIN<br/>
+            PROFORM INVOICE AND HEALTH
+                     </h4>
+         </div>
+            <br/><br/><br/><br/><br/>
+            <br/><br/><br/><br/><br/>
+            <br/><br/><br/><br/><br/>
+        <div class="San Ramon Gen.Trad Co" style="text-align: left;  float: left; margin-top:0px">
+                <b>San Ramon Gen.Trad Co <br/> www.sanramonkw.com</b>
+        </div>
+        <div class="mails" style="text-align: center;  float: center;margin-top:0px">
+                <b>info@sanramonkw.com <br/> T: +965 22669393</b>
+        </div>
+            <div class="Hawalli" style="text-align: right;  float: right;margin-top:-37px">
+                <b>Hawalli , Tunis St. <br/> Al-saqer Complex Office 9</b>
+            </div>
+<!--<table class="table table-sm o_main_table">-->
+        <tr>
+            <td>
+
+
+        <br/><br/>
+        <br/><br/>
+        <br/><br/>
+<!--        <div class="San Ramon Gen.Trad Co" style="text-align: left;  float: left; margin-top:0px">-->
+<!--                <b>San Ramon Gen.Trad Co <br/> www.sanramonkw.com</b>-->
+<!--        </div>-->
+<!--        <div class="mails" style="text-align: center;  float: center;margin-top:0px">-->
+<!--                <b>info@sanramonkw.com <br/> T: +965 22669393</b>-->
+<!--        </div>-->
+<!--            <div class="Hawalli" style="text-align: right;  float: right;margin-top:0px">-->
+<!--                <b>Hawalli , Tunis St. <br/> Al-saqer Complex Office 9</b>-->
+<!--            </div>-->
+
+</td>
+        </tr>
+
+
+
+
+
+                </t>
+            </t>
+        </template>
+
+        <report
+            id="action_invoice_report_custom"
+            model="account.move"
+            string="sanramonkw Invoice"
+            report_type="qweb-pdf"
+            name="custom_report.invoice_custom_report"
+            file="custom_report.invoice_custom_report"
+
+            print_report_name="('SAN-' + object._get_report_base_filename())"/>
+
+
+
+    </data>
+</odoo>
